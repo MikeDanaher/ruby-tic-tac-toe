@@ -15,9 +15,8 @@ class Game
 
   def game_loop(current_player, opponent)
     Output.put_string(board.to_s)
-    Output.print_string("Player #{current_player.symbol}, please choose a cell: ")
 
-    cell_choice = Input.get
+    cell_choice = current_player.get_move(board.available_cells)
     board.make_move(cell_choice, current_player.symbol)
     @move_count += 1
 
