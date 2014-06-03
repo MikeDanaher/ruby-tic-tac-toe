@@ -11,7 +11,11 @@ class Board
   end
 
   def make_move(cell, symbol)
-    state[cell] = symbol
+    state[cell.to_i] = symbol
+  end
+
+  def available_cells
+    state.map.with_index { |symbol, i| i if symbol == ' ' }.compact
   end
 
   def winner?
@@ -30,7 +34,7 @@ class Board
 
     possible_wins.each do |row|
       row.map! { |cell| state[cell] }
-      if row.uniq.length == 1 && row.uniq != ['']
+      if row.uniq.length == 1 && row.uniq != [' ']
         winner = true
         break
       end
