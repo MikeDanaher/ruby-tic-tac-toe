@@ -29,6 +29,10 @@ class Board
     self.winner
   end
 
+  def full?
+    available_cells.size == 0
+  end
+
   def to_s
     rows = insert_vertical_seperators(get_horizontal_rows)
     output = insert_horizontal_seperators(rows)

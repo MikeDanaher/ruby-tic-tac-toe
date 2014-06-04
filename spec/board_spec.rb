@@ -37,6 +37,11 @@ describe Board do
     expect(board.winner?).to be false
   end
 
+  it 'knows if the board is full' do
+    build_board(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], 'x')
+    expect(board.full?).to be true
+  end
+
   it 'turns the board into a string to be printed' do
     build_board(board, [2, 5, 8], 'x')
     expect(board.to_s).to eq("\n   |   | x \n-----------\n   |   | x \n-----------\n   |   | x \n\n")
