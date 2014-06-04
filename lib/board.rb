@@ -1,17 +1,17 @@
 class Board
-  attr_reader :size, :state
+  attr_reader   :size, :winning_rows, :number_of_rows, :state
+  attr_accessor :winner
 
-  def initialize(size)
-    @size = size
+  def initialize(options)
+    @size = options[:size]
+    @winning_rows = options[:winning_rows]
+    @number_of_rows = options[:number_of_rows]
+    @winner = false
     @state = create_empty_state(size)
   end
 
-  def get_state
-    state
-  end
-
   def make_move(cell, symbol)
-    state[cell.to_i] = symbol
+    state[cell] = symbol
   end
 
   def available_cells
@@ -19,34 +19,20 @@ class Board
   end
 
   def winner?
-    winner = false
-
-    possible_wins = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ]
-
-    possible_wins.each do |row|
-      row.map! { |cell| state[cell] }
-      if row.uniq.length == 1 && row.uniq != [' ']
-        winner = true
+    winning_rows.each do |row|
+      values = row.map { |cell| state[cell.to_i] }
+      if values.uniq.length == 1 && values.uniq != [' ']
+        self.winner = true
         break
       end
     end
-
-    winner
+    self.winner
   end
 
   def to_s
     rows = insert_vertical_seperators(get_horizontal_rows)
     output = insert_horizontal_seperators(rows)
-    return " #{output} \n"
+    return "\n #{output} \n\n"
   end
 
   private
@@ -56,7 +42,7 @@ class Board
   end
 
   def get_horizontal_rows
-    state.each_slice(3).to_a
+    state.each_slice(number_of_rows).to_a
   end
 
   def insert_vertical_seperators(rows)

@@ -1,7 +1,8 @@
 require './lib/board'
+require './lib/game_config'
 
 describe Board do
-  let(:board) { Board.new(9) }
+  let(:board) { Board.new(GameConfig.options_3x3) }
 
   def build_board(board, moves, symbol)
     moves.each { |move| board.make_move(move, symbol) }
@@ -12,17 +13,17 @@ describe Board do
   end
 
   it 'gets the state of the current board as an array' do
-    expect(board.get_state).to eq([' ',' ',' ',' ',' ',' ',' ',' ',' '])
+    expect(board.state).to eq([' ',' ',' ',' ',' ',' ',' ',' ',' '])
+  end
+
+  it 'makes a move given a cell number and a symbol' do
+    board.make_move(4, 'x')
+    expect(board.available_cells).to eq([0, 1, 2, 3, 5, 6, 7, 8])
   end
 
   it 'gets the available cells of the board as an array' do
     build_board(board, [2, 3, 5, 6], 'x')
     expect(board.available_cells).to eq([0, 1, 4, 7, 8])
-  end
-
-  it 'makes a move given a cell number and a symbol' do
-    board.make_move(4, 'x')
-    expect(board.get_state).to eq([' ',' ',' ',' ','x',' ',' ',' ',' '])
   end
 
   it 'knows if there is a winner' do
@@ -38,7 +39,7 @@ describe Board do
 
   it 'turns the board into a string to be printed' do
     build_board(board, [2, 5, 8], 'x')
-    expect(board.to_s).to eq("   |   | x \n-----------\n   |   | x \n-----------\n   |   | x \n")
+    expect(board.to_s).to eq("\n   |   | x \n-----------\n   |   | x \n-----------\n   |   | x \n\n")
   end
 
 end

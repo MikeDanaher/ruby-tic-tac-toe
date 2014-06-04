@@ -14,11 +14,7 @@ class Human
     Output.print_string(message)
     choice = Input.get_number
 
-    if available_cells.include?(choice)
-      choice
-    else
-      get_move(available_cells, error_message)
-    end
+    available_cells.include?(choice) ? choice : get_move(available_cells, error_message)
   end
 
 end

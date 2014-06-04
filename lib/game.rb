@@ -1,15 +1,17 @@
 require './lib/board'
+require './lib/game_config'
 require './lib/human'
 require './lib/input'
 require './lib/output'
 
 class Game
-  attr_reader :player1, :player2, :board
+  attr_accessor :move_count
+  attr_reader   :player1, :player2, :board
 
   def initialize(symbol1, symbol2)
     @player1    = Human.new(symbol1)
     @player2    = Human.new(symbol2)
-    @board      = Board.new(9)
+    @board      = Board.new(GameConfig.options_3x3)
     @move_count = 0
   end
 
@@ -18,11 +20,11 @@ class Game
 
     cell_choice = current_player.get_move(board.available_cells)
     board.make_move(cell_choice, current_player.symbol)
-    @move_count += 1
+    self.move_count += 1
 
     if board.winner?
       end_game(current_player.symbol)
-    elsif @move_count == board.size
+    elsif self.move_count == board.size
       tie_game
     else
       game_loop(opponent, current_player)
