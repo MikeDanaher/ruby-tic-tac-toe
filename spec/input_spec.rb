@@ -2,12 +2,16 @@ require './lib/input'
 
 describe Input do
 
-  it 'gets input from the given input method' do
-    input_spy = double(:gets => true)
+  it 'returns the entered number from the given input' do
+    mock_input = double(:gets => 1)
 
-    Input.get(input_spy)
+    expect(Input.get_number(mock_input)).to eq(1)
+  end
 
-    expect(input_spy).to have_received(:gets)
+  it 'returns nil when a number is not entered' do
+    mock_input = double(:gets => "hello")
+
+    expect(Input.get_number(mock_input)).to eq(nil)
   end
 
 end

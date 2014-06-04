@@ -1,7 +1,7 @@
 module Input
 
-  def Input.get(input_method = $stdin)
-    input_method.gets
+  def Input.get_number(input_method = $stdin)
+    Integer(input_method.gets) rescue nil
   end
 
 end
