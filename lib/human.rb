@@ -10,11 +10,11 @@ class Human
     @error_message  = "Invalid, please try again: "
   end
 
-  def get_move(available_cells, message = prompt_message)
+  def get_move(board, opponent, message = prompt_message)
     Output.print_string(message)
     choice = Input.get_number
 
-    available_cells.include?(choice) ? choice : get_move(available_cells, error_message)
+    board.available_cells.include?(choice) ? choice : get_move(board, opponent, error_message)
   end
 
 end

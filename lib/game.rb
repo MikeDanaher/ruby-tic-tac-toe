@@ -10,10 +10,10 @@ class Game
 
   def play(current_player, opponent)
     print_board
-    cell_choice = current_player.get_move(board.available_cells)
+    cell_choice = current_player.get_move(board, opponent.symbol)
     board.make_move(cell_choice, current_player.symbol)
 
-    if board.winner?
+    if board.get_winner
       end_game("Player #{current_player.symbol} wins!")
     elsif board.full?
       end_game("It's a tie!")

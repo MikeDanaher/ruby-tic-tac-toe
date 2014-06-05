@@ -1,12 +1,10 @@
 class Board
   attr_reader   :size, :winning_rows, :number_of_rows, :state
-  attr_accessor :winner
 
   def initialize(options)
     @size = options[:size]
     @winning_rows = options[:winning_rows]
     @number_of_rows = options[:number_of_rows]
-    @winner = false
     @state = create_empty_state(size)
   end
 
@@ -14,19 +12,24 @@ class Board
     state[cell] = symbol
   end
 
+  def remove(cell)
+    state[cell] = ' '
+  end
+
   def available_cells
     state.map.with_index { |symbol, i| i if symbol == ' ' }.compact
   end
 
-  def winner?
+  def get_winner
+    winner = nil
     winning_rows.each do |row|
-      values = row.map { |cell| state[cell.to_i] }
+      values = row.map { |cell| state[cell] }
       if values.uniq.length == 1 && values.uniq != [' ']
-        self.winner = true
+        winner = values[0]
         break
       end
     end
-    self.winner
+    winner
   end
 
   def full?
