@@ -13,7 +13,7 @@ describe Board do
   end
 
   it 'gets the state of the current board as an array' do
-    expect(board.state).to eq([' ',' ',' ',' ',' ',' ',' ',' ',' '])
+    expect(board.state).to eq([nil, nil, nil, nil, nil, nil, nil, nil, nil])
   end
 
   it 'makes a move given a cell number and a symbol' do
@@ -33,6 +33,16 @@ describe Board do
     expect(board.available_cells).to eq([0, 1, 4, 7, 8])
   end
 
+  it 'knows if the board is full' do
+    build_board(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], 'x')
+    expect(board.full?).to be true
+  end
+
+  it 'knows if the board is empty' do
+    empty_board = Board.new(GameConfig.options_3x3)
+    expect(empty_board.empty?).to be true
+  end
+
   it 'knows who the winner is' do
     build_board(board, [0, 2, 4, 6, 8], 'x')
     build_board(board, [1, 3, 5, 7], 'o')
@@ -43,11 +53,6 @@ describe Board do
     build_board(board, [0, 5, 8], 'x')
     build_board(board, [1, 3, 4], 'o')
     expect(board.get_winner).to be nil
-  end
-
-  it 'knows if the board is full' do
-    build_board(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], 'x')
-    expect(board.full?).to be true
   end
 
   it 'turns the board into a string to be printed' do
