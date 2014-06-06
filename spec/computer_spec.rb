@@ -14,40 +14,6 @@ describe Computer do
     expect(cpu.symbol).to eq('pc')
   end
 
-  describe "minimax score" do
-
-    it "returns a positive number if the computer wins" do
-      opponent_symbol = 'x'
-      cpu.base_score = 2
-      depth = 0
-      build_board(board, [0, 2, 4, 6, 8], 'pc')
-      build_board(board, [1, 3, 5, 7], 'x')
-
-      expect(cpu.final_score(board, depth)).to eq(2)
-    end
-
-    it "returns a negative number if the opponent wins" do
-      opponent_symbol = 'x'
-      cpu.base_score = 2
-      depth = 0
-      build_board(board, [0, 2, 4, 6, 8], 'x')
-      build_board(board, [1, 3, 5, 7], 'pc')
-
-      expect(cpu.final_score(board, depth)).to eq(-2)
-    end
-
-    it "returns 0 if there's a tie" do
-      opponent_symbol = 'x'
-      cpu.base_score = 2
-      depth = 0
-      build_board(board, [0, 2, 3, 7, 8], 'x')
-      build_board(board, [1, 4, 5, 6], 'pc')
-
-      expect(cpu.final_score(board, depth)).to eq(0)
-    end
-
-  end
-
   describe "get moves at beginning of game" do
     it "chooses a corner if the opponent chooses center and a corner" do
       opponent_symbol = 'x'
